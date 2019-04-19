@@ -1,16 +1,83 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	}
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "作业",
+        "enablePullDownRefresh": true,
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/dishes/index",
+      "style": {
+        "navigationBarTitleText": "全部菜品",
+        "enablePullDownRefresh": true,
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/inventory/index",
+      "style": {
+        "navigationBarTitleText": "常用清单",
+        "enablePullDownRefresh": true,
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/shopping/index",
+      "style": {
+        "navigationBarTitleText": "购物车",
+        "enablePullDownRefresh": true,
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/index",
+      "style": {
+        "navigationBarTitleText": "购物车",
+        "enablePullDownRefresh": true,
+        "navigationStyle": "custom"
+      }
+    }
+  ],
+  "tabBar": {
+    "color": "#aeb2b1",
+    "selectedColor": "#4d9766",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tabBar/home1.png",
+        "selectedIconPath": "static/tabBar/home2.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/dishes/index",
+        "iconPath": "static/tabBar/icon_API.png",
+        "selectedIconPath": "static/tabBar/icon_API_HL.png",
+        "text": "全部菜品"
+      },
+      {
+        "pagePath": "pages/inventory/index",
+        "iconPath": "static/tabBar/home1.png",
+        "selectedIconPath": "static/tabBar/home2.png",
+        "text": "常用清单"
+      },
+      {
+        "pagePath": "pages/shopping/index",
+        "iconPath": "static/tabBar/orders.png",
+        "selectedIconPath": "static/tabBar/orders-active.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "iconPath": "static/tabBar/user1.png",
+        "selectedIconPath": "static/tabBar/user2.png",
+        "text": "我的"
+      }
+    ]
+  }
 }
