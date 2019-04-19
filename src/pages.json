@@ -56,8 +56,8 @@
       },
       {
         "pagePath": "pages/dishes/index",
-        "iconPath": "static/tabBar/icon_API.png",
-        "selectedIconPath": "static/tabBar/icon_API_HL.png",
+        "iconPath": "static/tabBar/quanbu3.png",
+        "selectedIconPath": "static/tabBar/quanbu2.png",
         "text": "全部菜品"
       },
       {
@@ -68,8 +68,8 @@
       },
       {
         "pagePath": "pages/shopping/index",
-        "iconPath": "static/tabBar/orders.png",
-        "selectedIconPath": "static/tabBar/orders-active.png",
+        "iconPath": "static/tabBar/car1.jpg",
+        "selectedIconPath": "static/tabBar/car2.jpg",
         "text": "购物车"
       },
       {
