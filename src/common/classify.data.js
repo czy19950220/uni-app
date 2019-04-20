@@ -1,30 +1,52 @@
-export default[
+export default [
     {
         "name": "女装",
         "foods": [
             {
-                "name": "A字裙",
+                "name": "土豆（错误图片测试）",
                 "key": "A字裙",
-                "icon": "http://img.kiwifruits.cn/classify/1/1.jpg",
-                "cat": 10
+                "icon": "https://czy-1257069199.cos.ap-beijing.myqcloud.com/my-website/imgs/ganlan1.png",
+                "cat": 10,
+                "price": "￥1.28-1.35/斤",
+                "sort": "降价",
+                "turePrice":"1.28",
+                "addGoods":"plus-filled"
             },
             {
-                "name": "T恤",
+                "name": "甘蓝",
                 "key": "T恤",
-                "icon": "http://img.kiwifruits.cn/classify/1/2.jpg",
-                "cat": 10
+                "icon": "https://czy-1257069199.cos.ap-beijing.myqcloud.com/my-website/imgs/ganlan.png",
+                "cat": 10,
+                "tradePrice": "￥24.9/袋（10斤）",
+                "oldPrice": "￥2.55",
+                "price": "￥1.88/斤",
+                "sort": "降价",
+                "turePrice":"1.88",
+                "addGoods":"plus-filled"
             },
             {
                 "name": "半身裙",
                 "key": "半身裙",
                 "icon": "http://img.kiwifruits.cn/classify/1/3.jpg",
-                "cat": 10
+                "cat": 10,
+                "tradePrice": "￥24.9/袋（10斤）",
+                "oldPrice": "￥2.55",
+                "price": "￥1.55/斤",
+                "sort": "降价",
+                "turePrice":"1.55",
+                "addGoods":"plus-filled"
             },
             {
                 "name": "衬衫",
                 "key": "衬衫",
                 "icon": "http://img.kiwifruits.cn/classify/1/4.jpg",
-                "cat": 10
+                "cat": 10,
+                "tradePrice": "￥24.9/袋（10斤）",
+                "oldPrice": "￥2.55",
+                "price": "￥1.66/斤",
+                "sort": "降价",
+                "turePrice":"1.66",
+                "addGoods":"plus-filled"
             },
             {
                 "name": "短裙",
