@@ -8,7 +8,7 @@
         <view class="place"></view>
         <!-- 商品列表 -->
         <view class="goods-list">
-            <view class="tis" v-if="goodsList.length==0">购物车是空的哦~</view>
+            <view class="tis" v-if="car.length==0">购物车是空的哦~</view>
             <view class="row" v-for="(row,index) in car" :key="index" >
                 <!-- 删除按钮 -->
                 <view class="menu" @tap.stop="deleteGoods(row.id)">
@@ -29,7 +29,7 @@
                         </view>
                         <view class="info">
                             <view class="title">{{row.name}}</view>
-                            <view class="spec">{{row.spec}}</view>
+                            <view class="spec">{{row.price}}</view>
                             <view class="price-number">
                                 <view class="price">{{row.turePrice}}</view>
                                 <view class="number">
@@ -78,19 +78,12 @@
         },
         data() {
             return {
-                sumPrice:'0.00',
+                sumPrice:'0.00',//合计
                 headerPosition:"fixed",
                 headerTop:null,
                 statusTop:null,
                 selectedList:[],
                 isAllselected:false,
-                goodsList:[
-                    {id:1,img:'../../static/img/goods/p1.jpg',name:'标题商品标题',spec:'规格:S码',price:127.5,number:1,selected:false},
-                    {id:2,img:'../../static/img/goods/p2.jpg',name:'标题商品标题商品标题',spec:'规格:S码',price:127.5,number:1,selected:false},
-                    {id:3,img:'../../static/img/goods/p3.jpg',name:'品标题商品标题商品标题商品标题',spec:'规格:S码',price:127.5,number:1,selected:false},
-                    {id:4,img:'../../static/img/goods/p4.jpg',name:'品标题商品标题商品标题',spec:'规格:S码',price:127.5,number:1,selected:false},
-                    {id:5,img:'../../static/img/goods/p5.jpg',name:'品标题商品标题商品标题',spec:'规格:S码',price:127.5,number:1,selected:false}
-                ],
                 //控制滑动效果
                 theIndex:null,
                 oldIndex:null,
@@ -168,6 +161,7 @@
                 this.isStop = false;
             },
             //控制左滑删除效果-end
+
             //商品跳转
             toGoods(e){
                 uni.showToast({title: '商品'+e.id,icon:"none"});
@@ -178,10 +172,10 @@
             //跳转确认订单页面
             toConfirmation(){
                 let tmpList=[];
-                let len = this.goodsList.length;
+                let len = this.car.length;
                 for(let i=0;i<len;i++){
-                    if(this.goodsList[i].selected) {
-                        tmpList.push(this.goodsList[i]);
+                    if(this.car[i].selected) {
+                        tmpList.push(this.car[i]);
                     }
                 }
                 if(tmpList.length<1){
@@ -190,6 +184,11 @@
                         icon:'none'
                     });
                     return ;
+                }else {
+                    uni.showToast({
+                        title:`共计${this.sumPrice}元，还没写支付`,
+                        icon:'none'
+                    });
                 }
                 /*uni.setStorage({
                     key:'buylist',
@@ -203,10 +202,10 @@
             },
             //删除商品
             deleteGoods(id){
-                let len = this.goodsList.length;
+                let len = this.car.length;
                 for(let i=0;i<len;i++){
-                    if(id==this.goodsList[i].id){
-                        this.goodsList.splice(i, 1);
+                    if(id==this.car[i].id){
+                        this.car.splice(i, 1);
                         break;
                     }
                 }
@@ -221,58 +220,53 @@
                     this.deleteGoods(this.selectedList[i]);
                 }
                 this.selectedList = [];
-                this.isAllselected = this.selectedList.length == this.goodsList.length && this.goodsList.length>0;
+                this.isAllselected = this.selectedList.length == this.car.length && this.car.length>0;
                 this.sum();
             },
             // 选中商品
             selected(index){
-                this.goodsList[index].selected = this.goodsList[index].selected?false:true;
-                let i = this.selectedList.indexOf(this.goodsList[index].id);
-                i>-1?this.selectedList.splice(i, 1):this.selectedList.push(this.goodsList[index].id);
-                this.isAllselected = this.selectedList.length == this.goodsList.length;
+                this.car[index].selected = this.car[index].selected?false:true;
+                let i = this.selectedList.indexOf(this.car[index].id);
+                i>-1?this.selectedList.splice(i, 1):this.selectedList.push(this.car[index].id);
+                this.isAllselected = this.selectedList.length == this.car.length;
                 this.sum();
             },
             //全选
             allSelect(){
-                let len = this.goodsList.length;
+                let len = this.car.length;
                 let arr = [];
                 for(let i=0;i<len;i++){
-                    this.goodsList[i].selected = this.isAllselected? false : true;
-                    arr.push(this.goodsList[i].id);
+                    this.car[i].selected = this.isAllselected? false : true;
+                    arr.push(this.car[i].id);
                 }
                 this.selectedList = this.isAllselected?[]:arr;
-                this.isAllselected = this.isAllselected||this.goodsList.length==0?false : true;
+                this.isAllselected = this.isAllselected||this.car.length==0?false : true;
                 this.sum();
             },
             // 减少数量
             sub(index){
-                if(this.goodsList[index].number<=1){
+                if(this.car[index].number<=1){
                     return;
                 }
-                this.goodsList[index].number--;
+                this.car[index].number--;
                 this.sum();
             },
             // 增加数量
             add(index){
-                this.goodsList[index].number++;
+                this.car[index].number++;
                 this.sum();
             },
             // 合计
             sum(){
                 this.sumPrice=0;
-                let len = this.goodsList.length;
+                let len = this.car.length;
                 for(let i=0;i<len;i++){
-                    if(this.goodsList[i].selected) {
-                        this.sumPrice = this.sumPrice + (this.goodsList[i].number*this.goodsList[i].price);
+                    if(this.car[i].selected) {
+                        this.sumPrice = this.sumPrice + (this.car[i].number*this.car[i].turePrice);
                     }
                 }
                 this.sumPrice = this.sumPrice.toFixed(2);
             },
-            discard() {
-                //丢弃
-            }
-
-
         }
     }
 </script>
@@ -346,6 +340,7 @@
         /*  #endif  */
         .title{
             font-size: 36upx;
+            margin: auto;
         }
 
     }

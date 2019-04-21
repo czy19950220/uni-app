@@ -6,7 +6,7 @@ export default [
                 "id":1,
                 "name": "土豆（错误图片测试）",
                 "key": "A字裙",
-                "icon": "https://czy-1257069199.cos.ap-beijing.myqcloud.com/my-website/imgs/ganlan1.png",
+                "icon": "https://czy-1257069199.cos.ap-beijing.myqcloud.com/my-website/imgs/ganlan.png",
                 "cat": 10,
                 "price": "￥1.28-1.35/斤",
                 "sort": "降价",

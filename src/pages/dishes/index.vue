@@ -129,11 +129,13 @@
             ...mapActions([
                 'setCar'
             ]),
-            phone(){//打电话
+            //打电话
+            phone(){
                 uni.makePhoneCall({
                     phoneNumber: '114' //仅为示例
                 });
             },
+            //搜索提示点击事件
             tipsClick(item,val){
                 //搜索提示点击事件;item:大的分类，val：当前大的分类里面的当前具体的哪个。
                 //获取两个索引，一个是当前点击所属于的左侧导航栏的索引i，一个是当前归类的当前点击索引j
@@ -153,15 +155,18 @@
                     }
                 }
             },
+            //图片加载完成
             loaded(item){//图片加载完成
                 //懒加载打印测试
                 //console.log(item.icon)
             },
+            //图片错误
             imageError(item){//图片错误
                 console.log(item.icon);
                 item.icon='https://czy-1257069199.cos.ap-beijing.myqcloud.com/my-website/imgs/ganlan.png'
             },
-            removeAaary(_arr, _obj) {//删除数组中的一个对象_arr:数组,
+            //删除数组中的一个对象_arr:数组,
+            removeAaary(_arr, _obj) {
                 var length = _arr.length;
                 for (let i = 0; i < length; i++) {
                     if (_arr[i] == _obj) {
@@ -180,11 +185,13 @@
                     }
                 }
             },
-            searchFocus(event){//输入框聚焦时
-                console.log(event)
+            //输入框聚焦时
+            searchFocus(event){
+                //console.log(event)
                 this.inputTipsShow=true;
             },
-            search(event,name2) {//实时获取当前输入的内容
+            //实时获取当前输入的内容
+            search(event,name2) {
                 this.inputValue = event.target.value || name2;
                 //console.log(this.inputValue)
                 //搜索的所有信息数据
@@ -232,7 +239,8 @@
                     this.inputTipsShow=true;
                 });
             },
-            change(e) {//轮播
+            //轮播
+            change(e) {
                 this.current = e.detail.current;
             },
             scroll(e) {
@@ -255,6 +263,7 @@
                     _this.timeoutId = undefined;
                 }, 10)
             },
+            //滚动到点击点的导航对应位置
             categoryClickMain(index) {
                 this.categoryActive = index;
                 //console.log(index);
@@ -266,7 +275,8 @@
                     icon: "none",
                 })*/
             },
-            addGoods(item) {//添加商品
+            //添加商品
+            addGoods(item) {
                 if (item.addGoods == "plus-filled") {//如果当前是没有添加状态就添加到购物车
                     item.addGoods = "checkbox-filled";
                     item.number=1;
@@ -293,6 +303,7 @@
             this.height = uni.getSystemInfoSync().windowHeight - this.tabBarHeight - 130 - 60;
         },
         onReady() {
+            //一些高度的调整
             let _this = this;
             let selectorQuery = uni.createSelectorQuery();
             selectorQuery.selectAll('.nav-left-item').boundingClientRect(function (rects) {
