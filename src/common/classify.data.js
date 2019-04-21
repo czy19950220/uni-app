@@ -3,6 +3,7 @@ export default [
         "name": "女装",
         "foods": [
             {
+                "id":1,
                 "name": "土豆（错误图片测试）",
                 "key": "A字裙",
                 "icon": "https://czy-1257069199.cos.ap-beijing.myqcloud.com/my-website/imgs/ganlan1.png",
@@ -10,9 +11,11 @@ export default [
                 "price": "￥1.28-1.35/斤",
                 "sort": "降价",
                 "turePrice":"1.28",
-                "addGoods":"plus-filled"
+                "addGoods":"plus-filled",
+                "number":"1"
             },
             {
+                "id":2,
                 "name": "甘蓝",
                 "key": "T恤",
                 "icon": "https://czy-1257069199.cos.ap-beijing.myqcloud.com/my-website/imgs/ganlan.png",
@@ -22,9 +25,11 @@ export default [
                 "price": "￥1.88/斤",
                 "sort": "降价",
                 "turePrice":"1.88",
-                "addGoods":"plus-filled"
+                "addGoods":"plus-filled",
+                "number":"1"
             },
             {
+                "id":3,
                 "name": "半身裙",
                 "key": "半身裙",
                 "icon": "http://img.kiwifruits.cn/classify/1/3.jpg",
@@ -34,9 +39,11 @@ export default [
                 "price": "￥1.55/斤",
                 "sort": "降价",
                 "turePrice":"1.55",
-                "addGoods":"plus-filled"
+                "addGoods":"plus-filled",
+                "number":"1"
             },
             {
+                "id":4,
                 "name": "衬衫",
                 "key": "衬衫",
                 "icon": "http://img.kiwifruits.cn/classify/1/4.jpg",
@@ -46,7 +53,8 @@ export default [
                 "price": "￥1.66/斤",
                 "sort": "降价",
                 "turePrice":"1.66",
-                "addGoods":"plus-filled"
+                "addGoods":"plus-filled",
+                "number":"1"
             },
             {
                 "name": "短裙",

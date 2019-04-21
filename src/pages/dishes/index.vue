@@ -5,13 +5,13 @@
         <view class="top">
             <!--打电话-->
             <view class="top-left top-con">
-                <uni-icon type="phone-filled" size="28"></uni-icon>
+                <uni-icon @click="phone" type="phone-filled" size="28"></uni-icon>
             </view>
             <!--搜索框-->
             <view class="top-search top-con">
                 <uni-icon type="search" size="22" class="top-search-icon"></uni-icon>
-                <input class="uni-input" @input="search" confirm-type="search" placeholder="搜索菜品名称"/>
-                <scroll-view scroll-with-animation scroll-y class="ti-shi" v-if="inputValue != ''">
+                <input class="uni-input" @focus="searchFocus" @input="search" confirm-type="search" placeholder="搜索菜品名称"/>
+                <scroll-view scroll-with-animation scroll-y class="ti-shi" v-if="inputTipsShow">
                     <view v-for="(item,index) in tips" :key="index">
                         <view class="search-tips" v-for="(val,index2) in item.foods" :key="index2" @click="tipsClick(item,val)">
                             {{val.name}}<uni-badge class="search-tips-name" :text="item.name"></uni-badge>
@@ -29,7 +29,7 @@
         <!--轮播-->
         <view class="dishes-main">
             <view class="dishes-swiper">
-                <uni-swiper-dot :info="info" :current="current" field="content">
+                <uni-swiper-dot :height="3" :info="info" :current="current" field="content">
                     <swiper class="swiper-box" @change="change">
                         <swiper-item v-for="(item ,index) in info" :key="index">
                             <img :src="item.content" alt="活动轮播图">
@@ -41,6 +41,7 @@
         <!--分类导航-->
         <view class="dishes-body">
             <view class="page-body" :style="'height:'+height+'px'">
+                <!--左侧导航-->
                 <scroll-view class="nav-left" scroll-y :style="'height:'+height+'px'" :scroll-top="scrollLeftTop"
                              scroll-with-animation>
                     <view class="nav-left-item" @click="categoryClickMain(index)" :key="index"
@@ -49,6 +50,7 @@
                         {{item.name}}
                     </view>
                 </scroll-view>
+                <!--右侧商品-->
                 <scroll-view class="nav-right" scroll-y :scroll-top="scrollTop" @scroll="scroll"
                              :style="'height:'+height+'px'" scroll-with-animation>
                     <view v-for="(foods,index) in classifyData" :key="index" class="box">
@@ -65,7 +67,7 @@
 
                                 <view class="name-price-item item-sort" v-if="item.sort">
                                     {{item.sort}}
-                                </view><!--分类-->
+                                </view><!--分类:降价....-->
                             </view>
                             <uni-icon class="add-goods" :type="item.addGoods" size="30"
                                       @click="addGoods(item)"></uni-icon>
@@ -82,6 +84,7 @@
     import {uniIcon, uniSwiperDot, uniBadge} from '@dcloudio/uni-ui'
     import minBadge from '../../components/min-badge'
     import Fuse from 'fuse.js';
+    import { mapActions } from 'vuex'
 
     export default {
         components: {
@@ -93,6 +96,7 @@
         name: "index",
         data() {
             return {
+                inputTipsShow:false,//显示搜索提示
                 inputValue: '',//输入框内容
                 dot: true,//显示圆点或者是数字
                 info: [{//轮播详情
@@ -122,6 +126,14 @@
             }
         },
         methods: {
+            ...mapActions([
+                'setCar'
+            ]),
+            phone(){//打电话
+                uni.makePhoneCall({
+                    phoneNumber: '114' //仅为示例
+                });
+            },
             tipsClick(item,val){
                 //搜索提示点击事件;item:大的分类，val：当前大的分类里面的当前具体的哪个。
                 //获取两个索引，一个是当前点击所属于的左侧导航栏的索引i，一个是当前归类的当前点击索引j
@@ -130,12 +142,12 @@
                     if (item.name == this.classifyData[i].name){
                         //样式调整并滚动到当前分类
                         this.categoryActive = i;
-                        this.scrollTop = this.arr[i];
+                        //this.scrollTop = this.arr[i];
                         //然后找出当前归类的索引
                         for (let j = 0; j < this.classifyData[i].foods.length; j++){
                             if (this.classifyData[i].foods[j] == val) {
                                 this.scrollTop = this.arr[i] + j * this.rightItemHeight;
-                                this.inputValue='';
+                                this.inputTipsShow=false;
                             }
                         }
                     }
@@ -146,7 +158,7 @@
                 //console.log(item.icon)
             },
             imageError(item){//图片错误
-                console.log(item.icon)
+                console.log(item.icon);
                 item.icon='https://czy-1257069199.cos.ap-beijing.myqcloud.com/my-website/imgs/ganlan.png'
             },
             removeAaary(_arr, _obj) {//删除数组中的一个对象_arr:数组,
@@ -168,8 +180,13 @@
                     }
                 }
             },
-            search(event) {//实时获取当前输入的内容
-                this.inputValue = event.target.value;
+            searchFocus(event){//输入框聚焦时
+                console.log(event)
+                this.inputTipsShow=true;
+            },
+            search(event,name2) {//实时获取当前输入的内容
+                this.inputValue = event.target.value || name2;
+                //console.log(this.inputValue)
                 //搜索的所有信息数据
                 let books = this.classifyData;
                 let result=[];//结果信息
@@ -212,6 +229,7 @@
                 searchFoodsArray().then(searchDetail()).then( () =>{
                     console.log(tiShi);
                     this.tips=tiShi;
+                    this.inputTipsShow=true;
                 });
             },
             change(e) {//轮播
@@ -251,16 +269,28 @@
             addGoods(item) {//添加商品
                 if (item.addGoods == "plus-filled") {//如果当前是没有添加状态就添加到购物车
                     item.addGoods = "checkbox-filled";
+                    item.number=1;
                     this.car.push(item)
                 } else if (item.addGoods == "checkbox-filled") {
                     item.addGoods = "plus-filled";
                     this.car=this.removeAaary(this.car,item);
                 }
                 console.log(this.car)
+                this.setCar(this.car)
             }
         },
+        //下拉刷新，需要自己在page.json文件中配置开启页面下拉刷新 "enablePullDownRefresh": true
+        onPullDownRefresh() {
+            setTimeout(function () {
+                uni.stopPullDownRefresh();
+            }, 1000);
+            uni.showToast({
+                title:'下拉刷新并重新获取数据',
+                icon:'none'
+            });
+        },
         onLoad: function () {
-            this.height = uni.getSystemInfoSync().windowHeight - this.tabBarHeight - 150 - 60;
+            this.height = uni.getSystemInfoSync().windowHeight - this.tabBarHeight - 130 - 60;
         },
         onReady() {
             let _this = this;
@@ -286,7 +316,7 @@
                     top += rect.height;
                     arr.push(top)
                 })
-                console.log(arr)
+                //console.log(arr)
                 _this.arr = arr
             }).exec();
             //rightItemHeight
@@ -300,6 +330,10 @@
 </script>
 
 <style scoped>
+    uni-swiper{
+        height: 130px !important;
+    }
+
     page {
         height: 100%;
         overflow: hidden;

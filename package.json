@@ -26,6 +26,7 @@
     "@dcloudio/uni-mp-baidu": "*",
     "@dcloudio/uni-mp-toutiao": "*",
     "@dcloudio/uni-mp-weixin": "*",
+    "@dcloudio/uni-ui": "0.0.7",
     "flyio": "^0.6.2",
     "fuse.js": "^3.4.4",
     "node-sass": "^4.11.0",
