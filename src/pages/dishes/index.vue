@@ -189,7 +189,7 @@
             bigItem(index){
                 this.bigActive=index;
                 uni.showToast({
-                    title: '随机数据：' + this.bigSort[index]+'(只有两种，可点击切换)',
+                    title: '随机数据：' + this.bigSort[index]+'(只有两种数据)',
                     icon:'none'
                 });
                 if (Math.random()>0.5){
