@@ -73,7 +73,8 @@
         name: "index",
         computed: {
             ...mapGetters([
-                'car'
+                'car',
+                'classifyData'
             ])
         },
         data() {
@@ -112,6 +113,10 @@
             // #endif
         },
         methods: {
+            ...mapActions([
+                'setCar',
+                'setClassifyData'
+            ]),
             //控制左滑删除效果-begin
             touchStart(index,event){
                 //多点触控不触发
@@ -206,6 +211,16 @@
                 for(let i=0;i<len;i++){
                     if(id==this.car[i].id){
                         this.car.splice(i, 1);
+                        this.setCar(this.car);
+                        for(let x=0;x<this.classifyData.length;x++){
+                            for(let y=0;y<this.classifyData[x].foods.length;y++){
+                                if (id==this.classifyData[x].foods[y].id){
+                                    this.classifyData[x].foods[y].addGoods='plus-filled';
+                                    console.log(this.classifyData);
+                                    break;
+                                }
+                            }
+                        }
                         break;
                     }
                 }

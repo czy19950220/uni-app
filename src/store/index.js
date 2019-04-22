@@ -7,11 +7,12 @@ import * as actions from './actions';
 Vue.use(Vuex);
 
 const state = {
-  car:[],//购物车内容
+    car: [],//购物车内容
+    classifyData:[],//所有菜品的列表数据
 };
 export default new Vuex.Store({
-  state,
-  getters,
-  mutations,
-  actions
+    state,
+    getters,
+    mutations,
+    actions
 });

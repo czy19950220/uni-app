@@ -38,6 +38,24 @@
                 </uni-swiper-dot>
             </view>
         </view>
+        <!--大分类-->
+        <view class="big-sort">
+            <view class="big-sort-arrow" @click="arrowClick">
+                <uni-icon :type="arrowdown" size="24"></uni-icon>
+            </view>
+            <view class="bid-sort-con" v-show="arrowdown!='arrowdown'">
+                <view class="bid-item" @click="bigItem(index)" v-for="(item,index) in bigSort" :key="index" :class="index==bigActive?'active2':''">
+                    {{item}}
+                </view>
+            </view>
+            <scroll-view scroll-x class="big-sort-con">
+                <view :style="'width:'+(bigSort.length*200)+'upx'">
+                    <view class="bid-item" @click="bigItem(index)" v-for="(item,index) in bigSort" :key="index" :class="index==bigActive?'active2':''">
+                        {{item}}
+                    </view>
+                </view>
+            </scroll-view>
+        </view>
         <!--分类导航-->
         <view class="dishes-body">
             <view class="page-body" :style="'height:'+height+'px'">
@@ -81,21 +99,32 @@
 
 <script>
     import classifyData from '../../common/classify.data.js';
-    import {uniIcon, uniSwiperDot, uniBadge} from '@dcloudio/uni-ui'
+    import classifyData2 from '../../common/classify.data2.js';
+    import {uniIcon, uniSwiperDot, uniBadge,uniCollapse,uniCollapseItem} from '@dcloudio/uni-ui'
     import minBadge from '../../components/min-badge'
     import Fuse from 'fuse.js';
-    import { mapActions } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex'
 
     export default {
         components: {
             uniIcon,
             uniSwiperDot,
             minBadge,
-            uniBadge
+            uniBadge,
+            uniCollapse,
+            uniCollapseItem
+        },
+        computed: {
+            ...mapGetters([
+                'classifyData'
+            ])
         },
         name: "index",
         data() {
             return {
+                arrowdown:'arrowdown',
+                bigActive:0,//大分类样式绑定
+                bigSort:['新鲜蔬菜','时令水果','肉禽类','方便速食','加工调理','开封菜类','川菜火锅','羊肉泡馍'],//大的菜品分类
                 inputTipsShow:false,//显示搜索提示
                 inputValue: '',//输入框内容
                 dot: true,//显示圆点或者是数字
@@ -113,7 +142,7 @@
                 scrollTop: 0,
                 scrollLeftTop: 0,
                 // scrollHeight: 0,
-                classifyData: classifyData,//数据
+                //classifyData: classifyData,//数据
                 arr: [0, 584, 1168, 1752, 2336, 2805, 3274, 3858, 4442, 4911, 5380, 5734, 6203, 6672, 7017],//初始值，后边计算会根据手机适配覆盖
                 leftItemHeight: 51,//左侧单个导航高度，会计算出新值进行覆盖
                 rightItemHeight: 120,//右侧单个物品高度，会计算出新值进行覆盖
@@ -127,7 +156,8 @@
         },
         methods: {
             ...mapActions([
-                'setCar'
+                'setCar',
+                'setClassifyData'
             ]),
             //打电话
             phone(){
@@ -153,6 +183,28 @@
                             }
                         }
                     }
+                }
+            },
+            //大的分类点击事件
+            bigItem(index){
+                this.bigActive=index;
+                uni.showToast({
+                    title: '随机数据：' + this.bigSort[index]+'(只有两种，可点击切换)',
+                    icon:'none'
+                });
+                if (Math.random()>0.5){
+                    this.setClassifyData(classifyData2);
+                } else {
+                    this.setClassifyData(classifyData);
+                }
+
+            },
+            //大分类下拉箭头点击事件
+            arrowClick(){
+                if (this.arrowdown=='arrowdown'){
+                    this.arrowdown='arrowup'
+                }else {
+                    this.arrowdown='arrowdown'
                 }
             },
             //图片加载完成
@@ -300,7 +352,8 @@
             });
         },
         onLoad: function () {
-            this.height = uni.getSystemInfoSync().windowHeight - this.tabBarHeight - 130 - 60;
+            this.height = uni.getSystemInfoSync().windowHeight - this.tabBarHeight - 130 - 60 -40;
+            this.setClassifyData(classifyData);
         },
         onReady() {
             //一些高度的调整
@@ -442,6 +495,55 @@
         display: flex;
         background: #fff;
         overflow: hidden;
+    }
+
+    .big-sort{
+        height: 80upx;
+        line-height: 80upx;
+        border-bottom: 1px solid #e9e9e9;
+        position: relative;
+    }
+    .big-sort-arrow{
+        position: absolute;
+        top: 0upx;
+        right: 0upx;
+        height: 80upx;
+        width: 92upx;
+        background-color: white;
+        text-align: center;
+        z-index:12;
+    }
+    .bid-sort-con{
+        position: absolute;
+        top: 80upx;
+        right: 10upx;
+        width: 100%;
+        background-color: white;
+        z-index:12;
+        border-top: 1px solid #e9e9e9;
+        border-bottom: 1px solid #e9e9e9;
+    }
+    .big-sort-arrow>.uni-icon{
+        color: #18a851 !important;
+    }
+    .big-sort-con{
+        height: 80upx;
+        width: auto;
+    }
+
+    .bid-item{
+        color: #808080;
+        font-size: 28upx;
+        display: inline-block;
+        margin-left: 40upx;
+        padding: 4upx 16upx;
+        border-radius: 20upx;
+        line-height: 1.5;
+        background-color: lavenderblush;
+    }
+    .active2{
+        background-color: #0fb053;
+        color: white;
     }
 
     .nav {
