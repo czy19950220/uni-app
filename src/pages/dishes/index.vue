@@ -49,7 +49,7 @@
                 </view>
             </view>
             <scroll-view scroll-x class="big-sort-con">
-                <view :style="'width:'+(bigSort.length*200)+'upx'">
+                <view :style="'width:'+(bigSort.length*100)+'px'">
                     <view class="bid-item" @click="bigItem(index)" v-for="(item,index) in bigSort" :key="index" :class="index==bigActive?'active2':''">
                         {{item}}
                     </view>
