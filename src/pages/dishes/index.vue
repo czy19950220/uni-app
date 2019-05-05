@@ -39,7 +39,7 @@
             </view>
         </view>
         <!--大分类-->
-        <view class="big-sort">
+        <!--<view class="big-sort">
             <view class="big-sort-arrow" @click="arrowClick">
                 <uni-icon :type="arrowdown" size="24"></uni-icon>
             </view>
@@ -55,7 +55,7 @@
                     </view>
                 </view>
             </scroll-view>
-        </view>
+        </view>-->
         <!--分类导航-->
         <view class="dishes-body">
             <view class="page-body" :style="'height:'+height+'px'">
@@ -352,7 +352,7 @@
             });
         },
         onLoad: function () {
-            this.height = uni.getSystemInfoSync().windowHeight - this.tabBarHeight - 130 - 60 -40;
+            this.height = uni.getSystemInfoSync().windowHeight - this.tabBarHeight - 130 - 60;
             this.setClassifyData(classifyData);
         },
         onReady() {
